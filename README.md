@@ -63,6 +63,13 @@ An example deployment can be found [here](./example).
 By default, the driver emits human-readable log lines. Use `-log-format=json` for
 JSON structured output suitable for log aggregation systems.
 
+### Metrics
+
+Set `-metrics-bind-address` (e.g. `:8080`) to serve Prometheus metrics at
+`/metrics`. The endpoint is disabled by default. It exposes Go runtime and
+process metrics, plus `spiffe_csi_driver_rpc_duration_seconds`, a histogram of
+CSI RPC durations labeled by `method` and gRPC status `code`.
+
 ## Troubleshooting
 
 This component has a fairly simple design and function but some of the

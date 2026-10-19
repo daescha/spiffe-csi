@@ -21,6 +21,7 @@ var (
 	pluginNameFlag           = flag.String("plugin-name", "csi.spiffe.io", "Plugin name to register")
 	workloadAPISocketDirFlag = flag.String("workload-api-socket-dir", "", "Path to the Workload API socket directory")
 	logFormatFlag            = flag.String("log-format", "text", "Log format: text or json")
+	metricsBindAddressFlag   = flag.String("metrics-bind-address", "", "TCP address for the Prometheus metrics endpoint (e.g. :8080). Disabled if empty.")
 )
 
 func main() {
@@ -61,9 +62,10 @@ func main() {
 	}
 
 	serverConfig := server.Config{
-		Log:           log,
-		CSISocketPath: *csiSocketPathFlag,
-		Driver:        driver,
+		Log:                log,
+		CSISocketPath:      *csiSocketPathFlag,
+		MetricsBindAddress: *metricsBindAddressFlag,
+		Driver:             driver,
 	}
 
 	if err := server.Run(serverConfig); err != nil {
